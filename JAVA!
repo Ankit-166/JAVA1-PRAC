@@ -1,0 +1,177 @@
+/ Interface
+interface Shape {
+    double area();
+    double perimeter();
+    double volume();
+}
+
+// Abstract class
+abstract class AbstractShape implements Shape {
+    double radius;
+    AbstractShape(double r) {
+        radius = r;
+    }
+}
+// Circle (2D shape)
+class Circle extends AbstractShape {
+    Circle(double r) {
+        super(r);
+    }
+    public double area() {
+        return 3.14 * radius * radius;
+    }
+    public double perimeter() {
+        return 2 * 3.14 * radius;
+    }
+    public double volume() {   // Not for 2D
+        return 0;
+    }
+}
+// Sphere (3D shape)
+class Sphere extends AbstractShape {
+    Sphere(double r) {
+        super(r);
+    }
+    public double area() {
+        return 4 * 3.14 * radius * radius;
+    }
+    public double perimeter() {  // Not for 3D
+        return 0;
+    }
+    public double volume() {
+        return (4.0/3) * 3.14 * radius * radius * radius;
+    }
+}
+// Final utility class
+final class ShowResult {
+    static void print(Shape s, String name) {
+        System.out.println(name + " Area = " + s.area());
+        System.out.println(name + " Perimeter = " + s.perimeter());
+        System.out.println(name + " Volume = " + s.volume());
+        System.out.println("---------------------");
+    }
+}
+// Main class
+public class ShapeCalculatorEasy {
+    public static void main(String[] args) {
+        Shape c = new Circle(5);   // circle with radius 5
+        Shape s = new Sphere(3);   // sphere with radius 3
+
+        ShowResult.print(c, "Circle");
+        ShowResult.print(s, "Sphere");
+    }
+}
+10==================================================================
+import java.io.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
+
+public class FileOperations {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+ try {
+            // 1. Accept string, convert to uppercase, store in file
+            System.out.print("Enter a string: ");
+
+            String str = sc.nextLine();
+
+            String upper = str.toUpperCase();
+
+
+ FileWriter fw1 = new FileWriter("output1.txt");
+
+            fw1.write("Uppercase String: " + upper);
+
+            fw1.close();
+
+            System.out.println("String stored in output1.txt");
+// 2. Write double value and date to file
+            System.out.print("Enter a double value: ");
+            double val = sc.nextDouble();
+
+            FileWriter fw2 = new FileWriter("output2.txt");
+
+            String date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+
+            fw2.write("Double Value: " + val + "\n");
+
+            fw2.write("Date: " + date);
+
+            fw2.close();
+
+            System.out.println("Double value and date stored in output2.txt");
+ // 3. Delete file or directory
+
+            sc.nextLine(); // clear buffer
+
+            System.out.print("Enter file/directory name to delete: ");
+
+            String fname = sc.nextLine();
+File f = new File(fname);
+
+            if (f.delete()) {
+
+                System.out.println(fname + " deleted successfully.");
+            } else {
+
+                System.out.println("Failed to delete " + fname + ". Check if it exists.");
+            }
+
+        } catch (Exception e) {
+
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        sc.close();
+    }
+}
+12===================================================
+import java.util.Iterator;
+import java.util.LinkedList;
+
+class Address {
+    private String name;
+    private String city;
+    private String state;
+
+    // Constructor
+    public Address(String name, String city, String state) {
+        this.name = name;
+        this.city = city;
+        this.state = state;
+    }
+
+    // Getters (optional, useful if you want to access fields individually)
+    public String getName() { return name; }
+    public String getCity() { return city; }
+    public String getState() { return state; }
+
+    // toString() so printing Address is easy and readable
+    @Override
+    public String toString() {
+        return "Name: " + name + ", City: " + city + ", State: " + state;
+    }
+}
+
+public class Maillist {
+    public static void main(String[] args) {
+        // Create a LinkedList of Address objects
+        LinkedList<Address> mailList = new LinkedList<>();
+
+        // Add elements to the linked list
+        mailList.add(new Address("Ankit Sahu", "Vadodara", "Gujarat"));
+        mailList.add(new Address("Priyasa Patel", "Ahmedabad", "Gujarat"));
+        mailList.add(new Address("Jayashree Rao", "Mumbai", "Maharashtra"));
+        mailList.add(new Address("Ashutosh Kumar", "Bengaluru", "Karnataka"));
+
+        // Display the contents using Iterator
+        System.out.println("Mailing List Contents:");
+        Iterator<Address> it = mailList.iterator();
+        while (it.hasNext()) {
+            Address addr = it.next();
+            System.out.println(addr); // uses Address.toString()
+        }
+    }
+}
